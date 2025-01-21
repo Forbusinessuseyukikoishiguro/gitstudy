@@ -20,7 +20,62 @@
         <div class="content-area">
             <h2>ページ2 コンテンツ</h2>
             <div class="page-content">
-                <p>ここにページ2のコンテンツが入ります。</p>
+                <p><!DOCTYPE html>
+                    <html lang="ja">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>請求情報</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                line-height: 1.6;
+                            }
+                            .bill-container {
+                                margin: 20px;
+                                padding: 20px;
+                                border: 1px solid #ccc;
+                                border-radius: 5px;
+                                width: 300px;
+                            }
+                            .bill-header {
+                                font-size: 1.2em;
+                                margin-bottom: 10px;
+                            }
+                            .bill-section {
+                                margin-top: 10px;
+                            }
+                            .bill-label {
+                                font-weight: bold;
+                            }
+                            .bill-amount {
+                                font-size: 1.5em;
+                                color: #333;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div id="type03" class="bill-container">
+                            <div class="bill-header">直近のご請求額（2024年12月）</div>
+                            <div class="bill-section">
+                                <dl>
+                                    <dt class="bill-label">電気</dt>
+                                    <dd>
+                                        請求金額：
+                                        <a href="#">
+                                            <b id="type03">28,281円</b>
+                                        </a>
+                                    </dd>
+                                    <dd>
+                                        ご使用量：
+                                        <span id="electric-usage">968kWh</span>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                    </p>
             </div>
         </div>
     </div>
