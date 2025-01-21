@@ -13,6 +13,7 @@
             <div class="error-message">{{ error }}</div>
         {% endif %}
         <form method="POST" action="{{ url_for('login') }}">
+            <h3>ログインID</h3>
             <div class="form-group">
                 <input 
                     size="20" 
@@ -23,7 +24,7 @@
                     placeholder="ログインID※メールアドレス"
                     required>
             </div>
-            
+            <h3>パスワード</h3>
             <div class="form-group">
                 <input 
                     size="20" 
