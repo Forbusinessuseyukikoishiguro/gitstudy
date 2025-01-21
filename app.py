@@ -2,9 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import os
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = os.urandom(24)  # セッション用キー
 
-# 認証情報を変更
+# 認証情報
 VALID_CREDENTIALS = {
     'メールアドレス': '111',  # ID
     'パスワード': '222'       # パスワード
@@ -12,64 +12,69 @@ VALID_CREDENTIALS = {
 
 @app.route('/')
 def index():
-    # ログイン画面の表示
-    return render_template('login.html')  # 必ず login.html を templates フォルダに配置
+    """ログイン画面を表示"""
+    if session.get('logged_in'):
+        return redirect(url_for('page1'))
+    return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
 def login():
-    # フォームからデータ取得
+    """ログイン処理"""
     mail = request.form.get('mail')
     password = request.form.get('password')
     
-    # 認証チェック
     if mail == VALID_CREDENTIALS['メールアドレス'] and password == VALID_CREDENTIALS['パスワード']:
         session['logged_in'] = True
-        return redirect(url_for('page1'))  # ログイン成功時、page1 へリダイレクト
+        return redirect(url_for('page1'))
     
-    # ログイン失敗時エラーメッセージを渡して再表示
     return render_template('login.html', error="メールアドレスまたはパスワードが正しくありません")
 
 @app.route('/page1')
 def page1():
-    # セッション認証の確認
+    """ページ1表示"""
     if not session.get('logged_in'):
         return redirect(url_for('index'))
-    return render_template('page1.html')  # 必ず page1.html を templates フォルダに配置
+    return render_template('page1.html')
 
-@app.route('/page2')
+@app.route('/page2', methods=['GET', 'POST'])
 def page2():
-    # セッション認証の確認
+    """ページ2表示"""
     if not session.get('logged_in'):
         return redirect(url_for('index'))
-    return render_template('page2.html')  # 必ず page2.html を templates フォルダに配置
+    
+    if request.method == 'POST':
+        # フォームデータを取得
+        name = request.form.get('member_secret_answer')
+        return render_template('page2.html', name=name)
+    
+    return render_template('page2.html')
 
 @app.route('/page3')
 def page3():
-    # セッション認証の確認
+    """ページ3表示"""
     if not session.get('logged_in'):
         return redirect(url_for('index'))
-    return render_template('page3.html')  # 必ず page3.html を templates フォルダに配置
+    return render_template('page3.html')
 
 @app.route('/page4')
 def page4():
-    # セッション認証の確認
+    """ページ4表示"""
     if not session.get('logged_in'):
         return redirect(url_for('index'))
-    return render_template('page4.html')  # 必ず page4.html を templates フォルダに配置
+    return render_template('page4.html')
 
 @app.route('/page5')
 def page5():
-    # セッション認証の確認
+    """ページ5表示"""
     if not session.get('logged_in'):
         return redirect(url_for('index'))
-    return render_template('page5.html')  # 必ず page5.html を templates フォルダに配置
+    return render_template('page5.html')
 
 @app.route('/logout')
 def logout():
-    # ログアウト時にセッションをクリア
+    """ログアウト処理"""
     session.clear()
-    return redirect(url_for('index'))  # ログイン画面へ戻る
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    # アプリケーションを起動
     app.run(debug=True, host='0.0.0.0', port=8080)

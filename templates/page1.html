@@ -20,16 +20,18 @@
         <div class="content-area">
             <h2>ページ1 コンテンツ</h2>
             <div class="page-content">
-                <p> <h1>名前入力フォーム</h1>
-                    <form method="POST">
-                        <label for="member_secret_answer">名前を入力してください:</label>
-                        <input 
-                            size="20" 
-                            name="member_secret_answer" 
-                            id="member_secret_answer" 
-                            type="text"
-                        >
-                        <button type="submit">確認する</button></p>
+                <h1>名前入力フォーム</h1>
+                <form method="POST" action="{{ url_for('page2') }}">
+                    <label for="member_secret_answer">名前を入力してください:</label>
+                    <input 
+                        size="20" 
+                        name="member_secret_answer" 
+                        id="member_secret_answer" 
+                        type="text"
+                        class="input-field"
+                    >
+                    <button type="submit" class="submit-button">確認する</button>
+                </form>
             </div>
         </div>
     </div>
