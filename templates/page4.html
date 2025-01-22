@@ -5,6 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ページ4</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* 印刷用スタイル */
+        @media print {
+            .no-print {
+                display: none;
+            }
+            .print-only {
+                display: block;
+            }
+        }
+        
+        /* 既存のドロップダウンメニューのスタイル */
+        .head_menu {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .name_btn {
+            background: #f5f5f5;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-family: sans-serif;
+        }
+        
+        .name_btn b {
+            font-weight: normal;
+        }
+        
+        .name_btn::after {
+            content: "▼";
+            margin-left: 5px;
+            font-size: 12px;
+        }
+        
+        .dropdown_menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            min-width: 200px;
+        }
+        
+        .head_menu:hover .dropdown_menu {
+            display: block;
+        }
+        
+        .dropdown_menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .dropdown_menu li {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .dropdown_menu li:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown_menu a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .dropdown_menu a:hover {
+            background: #f5f5f5;
+        }
+
+        /* 新しく追加するスタイル */
+        .print-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .printable-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .menu-container {
+            margin-top: 20px;
+            text-align: right;
+            width: 100%;
+        }
+    </style>
 </head>
 <body class="page-body">
     <div class="page-container">
@@ -17,94 +129,43 @@
         </nav>
         
         <div class="content-area">
-            <h2>ページ4 コンテンツ</h2>
-            <div class="page-content">
-                <p><!DOCTYPE html>
-                    <html>
-                    <head>
-                    <style>
-                    .head_menu {
-                      position: relative;
-                      display: inline-block;
-                    }
-                    
-                    .name_btn {
-                      background: #f5f5f5;
-                      padding: 10px 15px;
-                      border: 1px solid #ddd;
-                      cursor: pointer;
-                      display: flex;
-                      align-items: center;
-                      font-family: sans-serif;
-                    }
-                    
-                    .name_btn b {
-                      font-weight: normal;
-                    }
-                    
-                    .name_btn::after {
-                      content: "▼";
-                      margin-left: 5px;
-                      font-size: 12px;
-                    }
-                    
-                    .dropdown_menu {
-                      display: none;
-                      position: absolute;
-                      top: 100%;
-                      right: 0;
-                      background: white;
-                      border: 1px solid #ddd;
-                      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                      min-width: 200px;
-                    }
-                    
-                    .head_menu:hover .dropdown_menu {
-                      display: block;
-                    }
-                    
-                    .dropdown_menu ul {
-                      list-style: none;
-                      margin: 0;
-                      padding: 0;
-                    }
-                    
-                    .dropdown_menu li {
-                      padding: 10px 15px;
-                      border-bottom: 1px solid #eee;
-                    }
-                    
-                    .dropdown_menu li:last-child {
-                      border-bottom: none;
-                    }
-                    
-                    .dropdown_menu a {
-                      color: #333;
-                      text-decoration: none;
-                      display: block;
-                    }
-                    
-                    .dropdown_menu a:hover {
-                      background: #f5f5f5;
-                    }
-                    </style>
-                    </head>
-                    <body>
+            <div class="content-wrapper">
+                <!-- 印刷ボタン -->
+                <button onclick="printPage()" class="print-button no-print">
+                    印刷する
+                </button>
+
+                <!-- 画像 -->
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/sample.png') }}" 
+                         alt="印刷用画像" 
+                         class="printable-image">
+                </div>
+
+                <!-- ドロップダウンメニュー -->
+                <div class="menu-container">
                     <div class="head_menu">
-                      <a href="#" class="name_btn">
-                        <span><b>クリオネふくしま薬局</b>さま</span>
-                      </a>
-                      <div class="dropdown_menu">
-                        <ul>
-                          <li><a href="#">会員情報の確認・変更</a></li>
-                          <li><a href="http://127.0.0.1:8080/page5">ログアウト</a></li>
-                        </ul>
-                      </div>
+                        <a href="#" class="name_btn">
+                            <span><b>クリオネふくしま薬局</b>さま</span>
+                        </a>
+                        <div class="dropdown_menu">
+                            <ul>
+                                <li><a href="#">会員情報の確認・変更</a></li>
+                                <li><a href="{{ url_for('page5') }}">ログアウト</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    </body>
-                    </html></p>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function printPage() {
+            if (confirm('印刷を開始しますか？')) {
+                window.print();
+            }
+        }
+    </script>
 </body>
 </html>
