@@ -1,171 +1,188 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ページ4</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <style>
-        /* 印刷用スタイル */
-        @media print {
-            .no-print {
-                display: none;
-            }
-            .print-only {
-                display: block;
-            }
-        }
-        
-        /* 既存のドロップダウンメニューのスタイル */
-        .head_menu {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .name_btn {
-            background: #f5f5f5;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            font-family: sans-serif;
-        }
-        
-        .name_btn b {
-            font-weight: normal;
-        }
-        
-        .name_btn::after {
-            content: "▼";
-            margin-left: 5px;
-            font-size: 12px;
-        }
-        
-        .dropdown_menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            min-width: 200px;
-        }
-        
-        .head_menu:hover .dropdown_menu {
-            display: block;
-        }
-        
-        .dropdown_menu ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .dropdown_menu li {
-            padding: 10px 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .dropdown_menu li:last-child {
-            border-bottom: none;
-        }
-        
-        .dropdown_menu a {
-            color: #333;
-            text-decoration: none;
-            display: block;
-        }
-        
-        .dropdown_menu a:hover {
-            background: #f5f5f5;
-        }
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>ページ4</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+   <style>
+       /* 印刷用スタイル */
+       @media print {
+           .no-print {
+               display: none;
+           }
+           .print-only {
+               display: block;
+           }
+       }
+       
+       /* 既存のドロップダウンメニューのスタイル */
+       .head_menu {
+           position: relative;
+           display: inline-block;
+       }
+       
+       .name_btn {
+           background: #f5f5f5;
+           padding: 10px 15px;
+           border: 1px solid #ddd;
+           cursor: pointer;
+           display: flex;
+           align-items: center;
+           font-family: sans-serif;
+       }
+       
+       .name_btn b {
+           font-weight: normal;
+       }
+       
+       .name_btn::after {
+           content: "▼";
+           margin-left: 5px;
+           font-size: 12px;
+       }
+       
+       .dropdown_menu {
+           display: none;
+           position: absolute;
+           top: 100%;
+           right: 0;
+           background: white;
+           border: 1px solid #ddd;
+           box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+           min-width: 200px;
+       }
+       
+       .head_menu:hover .dropdown_menu {
+           display: block;
+       }
+       
+       .dropdown_menu ul {
+           list-style: none;
+           margin: 0;
+           padding: 0;
+       }
+       
+       .dropdown_menu li {
+           padding: 10px 15px;
+           border-bottom: 1px solid #eee;
+       }
+       
+       .dropdown_menu li:last-child {
+           border-bottom: none;
+       }
+       
+       .dropdown_menu a {
+           color: #333;
+           text-decoration: none;
+           display: block;
+       }
+       
+       .dropdown_menu a:hover {
+           background: #f5f5f5;
+       }
 
-        /* 新しく追加するスタイル */
-        .print-button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 10px;
-        }
+       /* 新しく追加するスタイル */
+       .print-button {
+           padding: 10px 20px;
+           background-color: #4CAF50;
+           color: white;
+           border: none;
+           border-radius: 4px;
+           cursor: pointer;
+           margin: 10px;
+           display: flex;
+           align-items: center;
+       }
 
-        .content-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px;
-        }
+       .print-button::after {
+           content: "▼";
+           margin-left: 5px;
+           font-size: 12px;
+       }
 
-        .image-container {
-            margin: 20px 0;
-            text-align: center;
-        }
+       .print-button-container {
+           width: 100%;
+           display: flex;
+           justify-content: flex-end;
+           margin-bottom: 20px;
+       }
 
-        .printable-image {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 15px;
-        }
+       .content-wrapper {
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           margin: 20px;
+       }
 
-        .menu-container {
-            margin-top: 20px;
-            text-align: right;
-            width: 100%;
-        }
-    </style>
+       .image-container {
+           margin: 20px 0;
+           text-align: center;
+       }
+
+       .printable-image {
+           max-width: 100%;
+           height: auto;
+           margin-bottom: 15px;
+       }
+
+       .menu-container {
+           margin-top: 20px;
+           text-align: right;
+           width: 100%;
+       }
+   </style>
 </head>
 <body class="page-body">
-    <div class="page-container">
-        <nav class="navigation">
-            <a href="{{ url_for('page1') }}" class="nav-link">ページ1</a>
-            <a href="{{ url_for('page2') }}" class="nav-link">ページ2</a>
-            <a href="{{ url_for('page3') }}" class="nav-link">ページ3</a>
-            <a href="{{ url_for('page4') }}" class="nav-link active">ページ4</a>
-            <a href="{{ url_for('page5') }}" class="nav-link">ページ5</a>
-        </nav>
-        
-        <div class="content-area">
-            <div class="content-wrapper">
-                <!-- 印刷ボタン -->
-                <button onclick="printPage()" class="print-button no-print">
-                    印刷する
-                </button>
+   <div class="page-container">
+       <nav class="navigation">
+           <a href="{{ url_for('page1') }}" class="nav-link">ページ1</a>
+           <a href="{{ url_for('page2') }}" class="nav-link">ページ2</a>
+           <a href="{{ url_for('page3') }}" class="nav-link">ページ3</a>
+           <a href="{{ url_for('page4') }}" class="nav-link active">ページ4</a>
+           <a href="{{ url_for('page5') }}" class="nav-link">ページ5</a>
+       </nav>
+       
+       <div class="content-area">
+           <div class="content-wrapper">
+               <!-- 印刷ボタン -->
+               <div class="print-button-container">
+                   <button onclick="printPage()" class="print-button no-print">
+                       印刷する
+                   </button>
+               </div>
 
-                <!-- 画像 -->
-                <div class="image-container">
-                    <img src="{{ url_for('static', filename='images/sample.png') }}" 
-                         alt="印刷用画像" 
-                         class="printable-image">
-                </div>
+               <!-- 画像 -->
+               <div class="image-container">
+                   <img src="{{ url_for('static', filename='images/sample.png') }}" 
+                        alt="印刷用画像" 
+                        class="printable-image">
+               </div>
 
-                <!-- ドロップダウンメニュー -->
-                <div class="menu-container">
-                    <div class="head_menu">
-                        <a href="#" class="name_btn">
-                            <span><b>クリオネふくしま薬局</b>さま</span>
-                        </a>
-                        <div class="dropdown_menu">
-                            <ul>
-                                <li><a href="#">会員情報の確認・変更</a></li>
-                                <li><a href="{{ url_for('page5') }}">ログアウト</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+               <!-- ドロップダウンメニュー -->
+               <div class="menu-container">
+                   <div class="head_menu">
+                       <a href="#" class="name_btn">
+                           <span><b>クリオネふくしま薬局</b>さま</span>
+                       </a>
+                       <div class="dropdown_menu">
+                           <ul>
+                               <li><a href="#">会員情報の確認・変更</a></li>
+                               <li><a href="{{ url_for('page5') }}">ログアウト</a></li>
+                           </ul>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
 
-    <script>
-        function printPage() {
-            if (confirm('印刷を開始しますか？')) {
-                window.print();
-            }
-        }
-    </script>
+   <script>
+       function printPage() {
+           if (confirm('印刷を開始しますか？')) {
+               window.print();
+           }
+       }
+   </script>
 </body>
 </html>
