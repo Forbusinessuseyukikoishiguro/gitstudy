@@ -1,0 +1,79 @@
+# system_components.py
+import logging
+from pathlib import Path
+from datetime import datetime
+from enum import Enum
+from typing import Optional
+import sys
+
+class LogType(Enum):
+    """ログの種類を定義"""
+    NORMAL = "N"     # 正常系
+    ERROR = "K"      # 既知のエラー
+    UNKNOWN = "U"    # 不明なエラー
+
+class FunctionCode(Enum):
+    """関数コードの定義"""
+    CHECK_DATE = "F01"    # 日付チェック
+    CHECK_FILE = "F02"    # ファイル確認
+    PROCESS_DATA = "F03"  # データ処理
+
+class SystemLogger:
+    """ログ管理クラス"""
+    def __init__(self, log_dir: str = None):
+        self.logger = self._setup_logger(log_dir)
+        print(f"ログ出力先: {log_dir}")
+
+    def _setup_logger(self, log_dir: str) -> logging.Logger:
+        logger = logging.getLogger('SystemLogger')
+        logger.setLevel(logging.INFO)
+        
+        if logger.hasHandlers():
+            logger.handlers.clear()
+        
+        log_path = Path(log_dir) if log_dir else Path.cwd() / 'logs'
+        log_path.mkdir(exist_ok=True)
+        
+        today = datetime.now().strftime('%Y%m%d')
+        log_file = log_path / f'system_{today}.log'
+        
+        file_handler = logging.FileHandler(log_file, encoding='utf-8')
+        file_formatter = logging.Formatter(
+            '%(asctime)s [%(levelname)s] %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+        file_handler.setFormatter(file_formatter)
+        logger.addHandler(file_handler)
+        
+        console_handler = logging.StreamHandler()
+        console_formatter = logging.Formatter(
+            '%(asctime)s - %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+        console_handler.setFormatter(console_formatter)
+        logger.addHandler(console_handler)
+        
+        return logger
+
+    def write_log(self, function_code: FunctionCode, log_type: LogType, 
+                 message: str, code: int = 1):
+        log_code = f"{log_type.value}-{function_code.value}-{str(code).zfill(3)}"
+        log_message = f"{log_code} {message}"
+
+        if log_type == LogType.NORMAL:
+            print(f"[成功] {message}")
+            self.logger.info(log_message)
+        elif log_type == LogType.ERROR:
+            print(f"[エラー] {message}")
+            self.logger.error(log_message)
+        else:
+            print(f"[システムエラー] {message}")
+            self.logger.error(log_message)
+            
+            
+#2025/02/05作成中で小笠原先生相談
+#同じPythonファイルに、①ロガー②関数複数定義するクラスを作りたい
+#が、動かない
+#実行結果
+#PS C:\Users\yukik\desktop\excel> py forudakakunin.py
+#PS C:\Users\yukik\desktop\excel> 
